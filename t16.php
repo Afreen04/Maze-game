@@ -1,12 +1,11 @@
 <!--Sirens-->
 <html>
 <?php
-include("config.lib.php");
 session_start();
-if(!isset($_SESSION['check6'])){
-$_SESSION['check6']=0;}
+$con=mysqli_connect("localhost","root","","player");
 $sql="UPDATE position SET x='6'";
 if(mysqli_query($con,$sql));
+$con=mysqli_connect("localhost","root","","player");
 $sql="UPDATE position SET y='14'";
 if(mysqli_query($con,$sql));
 ?>
@@ -96,24 +95,21 @@ z-index:10;
  top:80px;
  visibility:hidden;
 }
-.HL{
-background: #ffff00;
-}
 </style>
 <body>
 <div id="clue" ><pre>
   USE THE FIRST LETTER OF EACH 
   SOLUTION TO GET THE ANSWER..
-   <img src="rebuspuz1.jpg" alt="cipher"/><form name="form1" method="post" action="check.php">
-  <input type="text" style="height:50px;width:300px;font-size:30px;" id="ans" name="ans6"/> <input type="submit" style="height:50px;width:200px;font-size:30px;" value="Submit" /></form>
+   <img src="rebuspuz1.png" alt="cipher"/><form name="form1" method="post" action="t11.php">
+  <input type="text" style="height:50px;width:300px;font-size:30px;" id="ans" /> <input type="button" style="height:50px;width:200px;font-size:30px;" value="Submit" onclick="check()"/></form>
   <input type="button" style="height:50px;width:200px;font-size:30px;left:70%;position:absolute;top:84%" value="Back" onclick="change()"/>
  </pre>
   </div>
 <audio id="au1">
-<source src="siren-final2.mp3" type="audio/mp3">
+<source src="siren-final.mp3" type="audio/mp3">
 </audio>
 <audio id="au2">
-<source src="siren-final.mp3" type="audio/mp3">
+<source src="siren-final2.mp3" type="audio/mp3">
 </audio>
 <img id="ocean" src="ocean.gif" width="1000px" height="454px">
 <img id="siren" src="siren4.jpg" width="1000px" height="454px">
@@ -123,7 +119,7 @@ background: #ffff00;
 </div>
 <p  id="a" style="top:-480px;" >Tell me about sirens.</p>
 <p  id="b" style="top:-520px;" >Can you give me some information about the thief?</p>
-<p  id="c" class="HL" style="top:-555px;" >Okay.</p>
+<p  id="c" style="top:-555px;" >Okay.</p>
 <h3 id="msg"></h3>
 <form action="fmaze2.php" method="post">
 <input id="back" type="submit" value="back" name="back">
@@ -132,9 +128,6 @@ background: #ffff00;
 </script>
 <script type="text/javascript">
 var ind=0,ctr=0,s,q;
-var cluehnd=document.getElementById("clue");
-var msghnd=document.getElementById("msg");
-
 				 var show=function(t,m,ind,i){
 if(ind<m.length){
 $(t).append(m[ind++]);
@@ -146,39 +139,36 @@ else{
 clearInterval(q);}}
 }
 $( "#a" ).click(function(){
-cluehnd.style.zIndex=200;
+document.getElementById("clue").style.zIndex=200;
 if(ctr==1){
 clearInterval(q);
 clearInterval(s);
-
-
 ind=0;
 ctr=0;}
-var m=document.getElementById("au1");
+/*var m=document.getElementById("au1");
 m.autoplay=false;
 m.load();
 var m=document.getElementById("au2");
 m.autoplay=true;
-m.load();
-msghnd.innerHTML="";
-s=setInterval(function(){show("#msg","My heart is pierced by cupid, I disdain all glittering gold, There is nothing can console me, But my jolly sailors boat.",ind++,0)},110);
+m.load();*/
+document.getElementById("msg").innerHTML="";
+s=setInterval(function(){show("#msg","My heart is pierced by cupid, I disdain all glittering gold, There is nothing can console me, But my jolly sailors boat.",ind++,0)},70);
 });
 $( "#b" ).click(function(){
-cluehnd.style.zIndex=200;
+document.getElementById("clue").style.zIndex=200;
 if(ctr==1){
 clearInterval(s);
 clearInterval(q);
-
 ind=0;
 ctr=0;}
-var m=document.getElementById("au2");
+/*var m=document.getElementById("au2");
 m.autoplay=false;
 m.load();
 var m=document.getElementById("au1");
 m.autoplay=true;
-m.load();
-msghnd.innerHTML="";
-q=setInterval(function(){show("#msg","Distracting is my music.Use your head and move along.",ind++,1)},110);
+m.load();*/
+document.getElementById("msg").innerHTML="";
+q=setInterval(function(){show("#msg","Distracting is my beauty.Use your head to move along.",ind++,1)},70);
 document.getElementById("c").style.visibility="visible";
 });
 function check()
@@ -188,8 +178,8 @@ function check()
   
 }
 function change(){
-cluehnd.style.visibility="hidden";
-cluehnd.style.zIndex=-200;
+document.getElementById("clue").style.visibility="hidden";
+document.getElementById("clue").style.zIndex=-200;
 }
 $( "#c" ).click(function(){
 var m=document.getElementById("au2");
@@ -203,14 +193,11 @@ clearInterval(s);
 clearInterval(q);
 ind=0;
 ctr=0;}
-msghnd.innerHTML="";
-cluehnd.style.visibility="visible";
-cluehnd.style.zIndex=200;
+document.getElementById("msg").innerHTML="";
+document.getElementById("clue").style.visibility="visible";
+document.getElementById("clue").style.zIndex=200;
 });
-var chec="<?php echo $_SESSION['check6']; ?>";
-if(chec=="1"){
-alert("Clue obtained ! Added to inventory.");
-}
+
 </script>
 </body>
 </html>

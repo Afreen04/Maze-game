@@ -1,12 +1,13 @@
-<!--chimera-->
+<!--Chimera-->
 <html>
 <?php
-include("config.lib.php");
 session_start();
 if(!isset($_SESSION['check7'])){
 $_SESSION['check7']=0;}
+$con=mysqli_connect("localhost","root","","player");
 $sql="UPDATE position SET x='25'";
 if(mysqli_query($con,$sql));
+$con=mysqli_connect("localhost","root","","player");
 $sql="UPDATE position SET y='14'";
 if(mysqli_query($con,$sql));
 ?>
@@ -105,10 +106,10 @@ display:none;}
 </style>
 <body>
 <audio id="au1">
-<source src="chimera2.mp3" type="audio/mp3">
+<source src="chimera2.wav" type="audio/wav">
 </audio>
 <audio id="au2">
-<source src="chimera1.mp3" type="audio/mp3">
+<source src="chimera1.wav" type="audio/wav">
 </audio>
 <div id="clue" ><pre>
    <img src="cipher3.png" alt="cipher"/><form method="post" action="check.php">
@@ -133,10 +134,6 @@ display:none;}
 </script>
 <script type="text/javascript">
 var ind=0,ctr=0,s,q,mm=0;
-var chnd=document.getElementById("chimera");
-var cohnd=document.getElementById("chimeraopen");
-var cluehnd=document.getElementById("clue");
-
 				 var show=function(t,m,ind,i){
 if(ind<m.length){
 $(t).append(m[ind++]);
@@ -151,10 +148,8 @@ clearInterval(q);
 clearInterval(mm);}}
 }
 $( "#a" ).click(function(){
-cluehnd.style.zIndex=200;
+document.getElementById("clue").style.zIndex=200;
 clearInterval(mm);
-clearInterval(q);
-clearInterval(s);
 if(ctr==1){
 clearInterval(q);
 clearInterval(mm);
@@ -171,10 +166,7 @@ s=setInterval(function(){show("#msg","The chimera is a monstrous fire-breathing 
 mm=setInterval(function(){movemouth()},200);
 });
 $( "#b" ).click(function(){
-clearInterval(mm);
-clearInterval(q);
-clearInterval(s);
-cluehnd.style.zIndex=200;
+document.getElementById("clue").style.zIndex=200;
 if(ctr==1){
 clearInterval(s);
 clearInterval(mm);
@@ -198,8 +190,8 @@ function check()
   
 }
 function change(){
-cluehnd.style.visibility="hidden";
-cluehnd.style.zIndex=-50;
+document.getElementById("clue").style.visibility="hidden";
+document.getElementById("clue").style.zIndex=-50;
 }
 $( "#c" ).click(function(){
 var m=document.getElementById("au2");
@@ -215,8 +207,8 @@ clearInterval(mm);
 ind=0;
 ctr=0;}
 document.getElementById("msg").innerHTML="";
-cluehnd.style.visibility="visible";
-cluehnd.style.zIndex=200;
+document.getElementById("clue").style.visibility="visible";
+document.getElementById("clue").style.zIndex=200;
 });
 var chec="<?php echo $_SESSION['check7']; ?>";
 if(chec=="1"){
@@ -224,13 +216,13 @@ alert("Clue obtained! Added to inventory.");
 }
 function movemouth(){
 console.log(mm);
-if(chnd.style.display=="none"){
-chnd.style.display="block";
-cohnd.style.display="none";
+if(document.getElementById("chimera").style.display=="none"){
+document.getElementById("chimera").style.display="block";
+document.getElementById("chimeraopen").style.display="none";
 }
 else {
-chnd.style.display="none";
-cohnd.style.display="block";}
+document.getElementById("chimera").style.display="none";
+document.getElementById("chimeraopen").style.display="block";}
 }
 </script>
 </body>

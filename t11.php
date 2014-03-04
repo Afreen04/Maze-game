@@ -1,12 +1,11 @@
 <html>
 <?php
-include("config.lib.php");
 session_start();
-if(!isset($_SESSION['check1'])){
-$_SESSION['check1']=0;}
 $a=0;
+$con=mysqli_connect("localhost","root","","player");
 $sql="UPDATE position SET x='1'";
 if(mysqli_query($con,$sql));
+$con=mysqli_connect("localhost","root","","player");
 $sql="UPDATE position SET y='4'";
 if(mysqli_query($con,$sql));
 if(isset($_POST["sub"])){
@@ -17,9 +16,6 @@ $a=1;
 <style>
 body{
 background-color:black;
-}
-.HL{
-background: #ffff00;
 }
 img#w{
 margin-top:-40%;
@@ -87,16 +83,16 @@ border-radius:5px;
 </style>
 <body>
 <audio id="au1">
-<source src="wolf12.mp3" type="audio/mp3">
+<source src="wolf12.wav" type="audio/wav">
 </audio>
 <audio id="au2">
-<source src="wolf11.mp3" type="audio/mp3">
+<source src="wolf11.wav" type="audio/wav">
 </audio>
 <canvas id="canv" width="1334px" height="720px"></canvas>
 <div id="clue" style="border-style:double;color:red;border-width:5px;"><pre>WHO AM I?
      Rhiqeq oqhlacnd</br></br>
-	 <form name="form1" method="post" action="check.php">
- <input type="text" style="height:40px;width:200px;font-size:30px;position:absolute;top:70%;" name="ans1" /> 
+	 <form name="form1" method="post" action="t11.php">
+ <input type="text" style="height:40px;width:200px;font-size:30px;position:absolute;top:70%;" name="ans" /> 
  <input type="submit" style="height:40px;width:200px;font-size:30px;position:absolute;top:85%;" name="sub" value="Submit"/></form>
  <input type="button" style="height:40px;width:200px;font-size:30px;left:70%;position:absolute;top:85%" value="back" onclick="change()"/>
  </pre>
@@ -105,17 +101,22 @@ border-radius:5px;
 <img id="w" src="wood.jpg" alt="wood" width="100%" height="25%">
 <img id="f" src="frame.jpg" alt="frame" width="100%" height="25%">
 </div>
-<p  id="a" style="top:110%;" >Tell me about werewolves.</p>
-<p  id="b" style="top:115%;" >Can you give me some Info about the Thief.</p>
-<p  id="c" class="HL" style="top:118%;" >yes.</p>
+<p  id="a" style="top:90%;" >Tell me about werewolves.</p>
+<p  id="b" style="top:95%;" >Can you give me some Info about the Thief.</p>
+<p  id="c" style="top:99%;" >yes.</p>
 <h3 id="msg"></h3>
 <form name="form2" action="fmaze2.php" method="post">
 <input id="back" type="submit" value="back" name="back">
 </form>
-<script src="jquery.js">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
 </script>
 <script type="text/javascript">
+var cluehnd=document.getElementById("clue");
+var msghnd=document.getElementById("msg");
+
+
 var w="<?php echo $a; ?>"; 
+
 if(w=="1"){
 alert("yes!!");
 }
@@ -140,7 +141,7 @@ else{
 clearInterval(q);}}
 }
 $( "#a" ).click(function(){s
-document.getElementById("clue").style.zIndex=50;
+cluehnd.style.zIndex=50;
 if(ctr==1){
 clearInterval(q);
 clearInterval(s);
@@ -152,11 +153,11 @@ m.load();
 var m=document.getElementById("au2");
 m.autoplay=true;
 m.load();
-document.getElementById("msg").innerHTML="";
+msghnd.innerHTML="";
 s=setInterval(function(){show("#msg","A werewolf, also known as a lycanthrope, is a mythological human with the ability to shapeshift into a wolf-like creature",ind++,0)},90);
 });
 $( "#b" ).click(function(){
-document.getElementById("clue").style.zIndex=50;
+cluehnd.style.zIndex=50;
 if(ctr==1){
 clearInterval(s);
 clearInterval(q);
@@ -168,13 +169,13 @@ m.load();
 var m=document.getElementById("au1");
 m.autoplay=true;
 m.load();
-document.getElementById("msg").innerHTML="";
+msghnd.innerHTML="";
 q=setInterval(function(){show("#msg","Help shall be given to those who earn it.Are you ready to Trick or Treat?!!",ind++,1)},70);
 document.getElementById("c").style.visibility="visible";
 });
 function change(){
-document.getElementById("clue").style.visibility="hidden";
-document.getElementById("clue").style.zIndex=-50;
+cluehnd.style.visibility="hidden";
+cluehnd.style.zIndex=-50;
 }
 $( "#c" ).click(function(){
 if(ctr==1){
@@ -188,14 +189,11 @@ m.load();
 var m=document.getElementById("au1");
 m.autoplay=false;
 m.load();
-document.getElementById("msg").innerHTML="";
-document.getElementById("clue").style.visibility="visible";
-document.getElementById("clue").style.zIndex=50;
+msghnd.innerHTML="";
+cluehnd.style.visibility="visible";
+cluehnd.style.zIndex=50;
 });
-var chec="<?php echo $_SESSION['check1']; ?>";
-if(chec=="1"){
-alert("Clue obtained ! Added to inventory.");
-}
+
 </script>
 </body>
 </html>

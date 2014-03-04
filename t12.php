@@ -1,21 +1,17 @@
 <!--dragon-->
 <html>
 <?php
-include("config.lib.php");
 session_start();
-if(!isset($_SESSION['check2'])){
-$_SESSION['check2']=0;}
+$con=mysqli_connect("localhost","root","","player");
 $sql="UPDATE position SET x='6'";
 if(mysqli_query($con,$sql));
+$con=mysqli_connect("localhost","root","","player");
 $sql="UPDATE position SET y='4'";
 if(mysqli_query($con,$sql));
 ?>
 <style>
 body{
 background-color:black;
-}
-.HL{
-background: #ffff00;
 }
 img#w{
 position:relative;
@@ -104,8 +100,8 @@ top:2%;
 <div id="clue" style="border-style:double;color:red;border-width:5px;"> WHO AM I?</br>
 
  <img src="dragon.jpg"/></br>
- <form name="form1" method="post" action="check.php"></br>
- <input type="text" style="height:50px;width:300px;font-size:30px;" name="ans2" id="ans2" /> 
+ <form name="form1" method="post" action="t11.php"></br>
+ <input type="text" style="height:50px;width:300px;font-size:30px;" id="ans" /> 
  <input type="submit" style="height:50px;width:200px;font-size:30px;top:85%" value="Submit"/></form>   
  <input type="button" style="height:50px;width:200px;font-size:30px;left:65%;position:absolute;top:83%" value="Back" onclick="change()"/>
   </div>
@@ -113,10 +109,10 @@ top:2%;
 <input id="back" type="submit" value="back" name="back">
 </form>
 <audio id="au1">
-<source src="dragon2.mp3" type="audio/mp3">
+<source src="dragon2.wav" type="audio/wav">
 </audio>
 <audio id="au2">
-<source src="dragon1.mp3" type="audio/mp3">
+<source src="dragon1.wav" type="audio/wav">
 </audio>
 <img id="drag" src="dragon.gif" width="60%" height="70%">
 <img id="fire" src="fire.jpg" width="1000px" height="400px">
@@ -126,16 +122,14 @@ top:2%;
 </div>
 <p  id="a" style="top:-150px;" >Tell me about dragons.</p>
 <p  id="b" style="top:-190px;" >Will you give me some information about the thief?</p>
-<p  id="c" class="HL" style="top:-240px;" >Okay.</p>
+<p  id="c" style="top:-240px;" >Okay.</p>
 <h3 id="msg"></h3>
 <script src="jquery.js">
 </script>
 <script type="text/javascript">
 var ind=0,ctr=0,s,q;
-var cluehnd=document.getElementById("clue");
 var show=function(t,m,ind,i){
-if(ind<m.length)
-{
+if(ind<m.length){
 $(t).append(m[ind++]);
 ctr=1;
 }
@@ -145,7 +139,7 @@ else{
 clearInterval(q);}}
 }
 $( "#a" ).click(function(){
-cluehnd.style.zIndex=200;
+document.getElementById("clue").style.zIndex=200;
 if(ctr==1){
 clearInterval(q);
 clearInterval(s);
@@ -161,14 +155,12 @@ document.getElementById("msg").innerHTML="";
 s=setInterval(function(){show("#msg","A dragon is a legendary creature, typically with serpentine or reptilian traits,that features in many myths.",ind++,0)},80);
 });
 $( "#b" ).click(function(){
-cluehnd.style.zIndex=200;
-if(ctr==1)
-{
+document.getElementById("clue").style.zIndex=200;
+if(ctr==1){
 clearInterval(s);
 clearInterval(q);
 ind=0;
-ctr=0;
-}
+ctr=0;}
 var m=document.getElementById("au2");
 m.autoplay=false;
 m.load();
@@ -185,13 +177,11 @@ function check()
   alert("Right Answer!");
   
 }
-function change()
-{
-cluehnd.style.visibility="hidden";
-cluehnd.style.zIndex=-200;
+function change(){
+document.getElementById("clue").style.visibility="hidden";
+document.getElementById("clue").style.zIndex=-200;
 }
-$( "#c" ).click(function()
-{
+$( "#c" ).click(function(){
 var m=document.getElementById("au2");
 m.autoplay=false;
 m.load();
@@ -204,16 +194,12 @@ clearInterval(q);
 ind=0;
 ctr=0;}
 document.getElementById("msg").innerHTML="";
-cluehnd.style.visibility="visible";
-cluehnd.style.zIndex=200;
+document.getElementById("clue").style.visibility="visible";
+document.getElementById("clue").style.zIndex=200;
 });
 $("#back").click(function(){
 window.location.replace("fmaze2.php");
-});		
-var chec="<?php echo $_SESSION['check2']; ?>";
-if(chec=="1"){
-alert("Clue obtained ! Added to inventory.");
-}		
+});				
 </script>
 </body>
 </html>

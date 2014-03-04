@@ -1,12 +1,11 @@
-<!--demntor-->
+<!--Dementor-->
 <html>
 <?php
-include("config.lib.php");
 session_start();
-if(!isset($_SESSION['check3'])){
-$_SESSION['check3']=0;}
+$con=mysqli_connect("localhost","root","","player");
 $sql="UPDATE position SET x='25'";
 if(mysqli_query($con,$sql));
+$con=mysqli_connect("localhost","root","","player");
 $sql="UPDATE position SET y='4'";
 if(mysqli_query($con,$sql));
 ?>
@@ -46,7 +45,7 @@ z-index:-10;
  height:600px;
  width:1400px;
  position:relative;
- margin-top:-900px;
+ margin-top:-800px;
  visibility:hidden;
  z-index:100;
 }
@@ -90,16 +89,13 @@ position:relative;
 margin-top:-500px;
 left:200px;
 }
-.HL{
-background: #ffff00;
-}
 </style>
 <body>
 <audio id="au1">
-<source src="dem2.mp3" type="audio/mp3">
+<source src="dem2.wav" type="audio/wav">
 </audio>
 <audio id="au2">
-<source src="dem1.mp3" type="audio/mp3">
+<source src="dem1.wav" type="audio/wav">
 </audio>
 <img id="dementor" src="dem2.png" width="340px" height="350px">
 <img id="dem" src="dem.gif" width="1000px" height="600px">
@@ -110,7 +106,7 @@ background: #ffff00;
 <div id="words">
 <p  id="a" style="top:-150px;" >Tell me about dementors.</p>
 <p  id="b" style="top:-190px;" >Can you give me some information about the thief?</p>
-<p  id="c" class="HL" style="top:-240px;" >Yes.</p>
+<p  id="c" style="top:-240px;" >Yes.</p>
 </div>
 <h3 id="msg"></h3>
 <div id="clue" style="border-style:double;color:red;border-width:5px;"><pre>
@@ -131,11 +127,12 @@ Scourgify spell, and the one who cast fifth.None of boys cast a spell with the s
 name.Hermione is known for her skill in casting an Impendimenta spell, so her date picked that spell to cast.
 Ron thought it would be "bloody brilliant" if he could make someone else keep quiet,so he cast the Silencio 
 spell.Fleur refused to allow her boyfriend and herself to cast their spell in any place but third.
-On the  first  turn <input type="text"  id="ans31"/> along with his girlfriend , <input type="text" id="ans32" /> cast a <input type="text" id="ans32" /> spell.</br> 
-On the  fourth turn <input type="text" id="ans34" /> along with his girlfriend,  <input type="text" id="ans35" /> cast a <input type="text"  id="ans36" /> spell. 
- <form name="form" action="check.php" method="post">
- <input type="submit" style="height:40px;width:200px;font-size:30px;" value="Submit" onclick="check()"/>   <input type="button" style="height:40px;width:200px;font-size:30px;" value="back" onclick="change()"/></pre>
-  </form></div>
+</br>
+On the  first  turn <input type="text"  id="ans1"/> along with his girlfriend , <input type="text" id="ans2" /> cast a <input type="text" id="ans3" /> spell.</br> 
+On the  fourth turn <input type="text" id="ans4" /> along with his girlfriend,  <input type="text" id="ans5" /> cast a <input type="text"  id="ans6" /> spell. 
+ 
+ <input type="button" style="height:40px;width:200px;font-size:30px;" value="Submit" onclick="check()"/>   <input type="button" style="height:40px;width:200px;font-size:30px;" value="back" onclick="change()"/></pre>
+  </div>
 <form action="fmaze2.php" method="post">
 <input id="back" type="submit" value="back" name="back">
 </form>
@@ -143,8 +140,6 @@ On the  fourth turn <input type="text" id="ans34" /> along with his girlfriend, 
 </script>
 <script type="text/javascript">
 var ind=0,ctr=0,s,q;
-var cluehnd=document.getElementById("clue");
-var msghnd=document.getElementById("msg");
 var show=function(t,m,ind,i){
 if(ind<m.length){
 $(t).append(m[ind++]);
@@ -156,7 +151,7 @@ else{
 clearInterval(q);}}
 }
 $( "#a" ).click(function(){
-cluehnd.style.zIndex=50;
+document.getElementById("clue").style.zIndex=50;
 if(ctr==1){
 clearInterval(q);
 clearInterval(s);
@@ -168,11 +163,11 @@ m.load();
 var m=document.getElementById("au2");
 m.autoplay=true;
 m.load();
-msghnd.innerHTML="";
+document.getElementById("msg").innerHTML="";
 s=setInterval(function(){show("#msg","Dementors are among the foulest creatures that walk this earth. They infest the darkest, filthiest places, they glory in decay and despair, they drain peace, hope, and happiness out of the air around them.",ind++,0)},110);
 });
 $( "#b" ).click(function(){
-cluehnd.style.zIndex=50;
+document.getElementById("clue").style.zIndex=50;
 if(ctr==1){
 clearInterval(s);
 clearInterval(q);
@@ -184,7 +179,7 @@ m.load();
 var m=document.getElementById("au1");
 m.autoplay=true;
 m.load();
-msghnd.innerHTML="";
+document.getElementById("msg").innerHTML="";
 q=setInterval(function(){show("#msg","Souls are required as payment.Do you have what it takes?",ind++,1)},110);
 document.getElementById("c").style.visibility="visible";
 });
@@ -200,17 +195,13 @@ clearInterval(s);
 clearInterval(q);
 ind=0;
 ctr=0;}
-msghnd.innerHTML="";
-cluehnd.style.visibility="visible";
-cluehnd.style.zIndex=50;
+document.getElementById("msg").innerHTML="";
+document.getElementById("clue").style.visibility="visible";
+document.getElementById("clue").style.zIndex=50;
 });
 function change(){
-cluehnd.style.visibility="hidden";
-cluehnd.style.zIndex=-50;
-}
-var chec="<?php echo $_SESSION['check3']; ?>";
-if(chec=="1"){
-alert("Clue obtained ! Added to inventory.");
+document.getElementById("clue").style.visibility="hidden";
+document.getElementById("clue").style.zIndex=-50;
 }
 </script>
 </body>
